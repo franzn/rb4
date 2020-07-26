@@ -7,7 +7,8 @@ Raspberry 4 with ubuntu 64 setup &amp; config
 ### set german keyboard
 sudo dpkg-reconfigure keyboard-configuration
 
-### setting static IP
+### setting static IP Ethernet
+
 
 edit /etc/netplan/50-cloud-init.yaml
 ```bash
@@ -26,6 +27,31 @@ edit /etc/netplan/50-cloud-init.yaml
                 addresses: [8.8.8.8,8.8.4.4,192.168.1.1]
         version: 2
 ```
+
+### setting static IP WLAN
+
+
+edit /etc/netplan/50-cloud-init.yaml
+```bash
+    wifis:
+        wlan0:
+           dhcp4: true
+           optional: true
+           access-points: 
+              "SSID_name":
+                  password: "WLAN password"
+
+```
+
+create / edit file /boot/firmware/usercfg.txt
+
+```bash
+    # Place "config.txt" changes (dtparam, dtoverlay, disable_overscan, etc.) in
+    # this file. Please refer to the README file for a description of the various
+    # configuration files on the boot partition.
+    dtoverlay=pi3-enable-wifi
+```
+
 
 
 ### add a new user 
